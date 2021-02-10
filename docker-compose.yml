@@ -1,0 +1,23 @@
+version: '3.6'
+services:
+  
+  airflow:
+      image: apache/airflow
+      container_name: airflow
+      ports:
+        - 8080:8080
+      command: 'bash -c "pip3 install -r requirements.txt && airflow db init && airflow webserver -D && airflow scheduler -D"'
+  
+  oltp-db:
+    image: postgres:11.4-alpine
+    restart: always
+    container_name: oltp-db
+    ports:
+      - 54320:54320
+  
+  olap-db:
+    image: postgres:11.4-alpine
+    restart: always
+    container_name: olap-db
+    ports:
+      - 54321:54321
